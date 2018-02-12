@@ -1,4 +1,4 @@
-var currentFile;
+let currentFile;
 
 window.onload = function(){
     List = JSON.parse(localStorage.getItem("List"));
@@ -6,7 +6,6 @@ window.onload = function(){
 }
 
 function loadPhoto(id, file){
-    document.getElementById(id).style.cssText = 'background: url(../prj/friendPhoto/' + file + ') 100% 100% no-repeat;';
     document.getElementById(id).src = '../prj/friendPhoto/' + file;
 }
 

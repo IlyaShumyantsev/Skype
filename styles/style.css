@@ -65,6 +65,7 @@ header{
     background: #4197d1;
     box-sizing: border-box;    
     border-bottom: 1px solid #aec0d4;
+    float: left;
 }
 
 .profile-image{
@@ -147,6 +148,21 @@ header{
     width: 70%;
     height: 75%;
     top:10%;
+    margin-left: 30%;
+    background-color: #ffffff;
+    background: url(../img/background.jpg) 100% 100% no-repeat;
+    background-size: cover;
+    box-sizing: border-box;    
+    border: 1px solid #aec0d4;
+    overflow: auto;
+}
+
+.text-field{
+    display: block;
+    position: fixed;
+    width: 70%;
+    height: 56%;
+    top:28%;
     margin-left: 30%;
     background-color: #ffffff;
     background: url(../img/background.jpg) 100% 100% no-repeat;

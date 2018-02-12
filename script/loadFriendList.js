@@ -1,7 +1,7 @@
-var loadFriendListPerm = true;
+let loadFriendListPerm = true;
 
 function loadListInBrowser(List){
-    var friedListField = document.getElementById('friend-list');
+    let friedListField = document.getElementById('friend-list');
     for(let i = 0; i < List.friends.length; i++){
         let currentFriend = document.createElement('div');
         let currentFriendName = document.createElement('div');
@@ -19,7 +19,6 @@ function loadListInBrowser(List){
         currentFriendPhoto.className = 'profile-image';
         currentFriendPhoto.style.cssText = 'height: 80%; width: 20%;';
         currentFriendPhoto.src = List.friends[i].photo;
-        //currentFriend.onclick = 'getInfo(this);';
 
         currentFriend.appendChild(currentFriendPhoto);
         currentFriend.appendChild(currentFriendName);

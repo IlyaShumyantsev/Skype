@@ -2,7 +2,7 @@ let currentId;
 
 window.onload = function(){
     List = JSON.parse(localStorage.getItem("List"));
-}
+};
 
 function deleteMiniPhoto(){
     try{
@@ -25,7 +25,7 @@ function clearNode(parentNode, tag){
 function loadFile(img, back){
     try{
         let messageFile = document.getElementById('button-load-photo').files[0].name;
-        let imgElement = document.createElement('img');
+        //let imgElement = document.createElement('img');
         img.style.cssText = 'height: 100px; width: 200px; float: right; bottom: 0%;';
         img.src = '../prj/friendPhoto/' + messageFile;
         back.appendChild(img);

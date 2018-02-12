@@ -101,9 +101,14 @@ document.getElementById('button-send').onclick = function(){
     backgroundMessage.style.cssText = 'background: #fffff347; border-radius: 20px; margin-top:1%; margin-bottom:1%; height: 100%; width: 100%; float: right; bottom: 0%; display: inline-block;';
     backgroundMessage.innerHTML = textMessage;
 
+    if(textMessage.indexOf(":" + currentEmojiId + ":") !== -1){
+      
+        backgroundMessage.appendChild(document.getElementById(currentEmojiId).cloneNode(true));
+    }
+
     if(loadFile(imgMessage, backgroundMessage) === 1 || (backgroundMessage.innerHTML.length > 0 && backgroundMessage.innerHTML !== '<br>')){   
         document.getElementById('text-field' + currentId).appendChild(backgroundMessage);
-        deleteMiniPhoto();  
+        deleteMiniPhoto(); 
 
         List = JSON.parse(localStorage.getItem("List"));
         List.friends[currentId].chat =  document.getElementById('text-field' + currentId).innerHTML;

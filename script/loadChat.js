@@ -103,9 +103,11 @@ document.getElementById('button-send').onclick = function(){
     backgroundMessage.style.cssText = 'background: #fffff347; border-radius: 20px; margin-top:1%; margin-bottom:1%; height: 100%; width: 100%; float: right; bottom: 0%; display: inline-block;';
     backgroundMessage.innerHTML = textMessage;
 
-    if(textMessage.indexOf(":" + currentEmojiId + ":") !== -1){
-        backgroundMessage.innerHTML = backgroundMessage.innerHTML.replace(":" + currentEmojiId + ":", "");
-        backgroundMessage.appendChild(document.getElementById(currentEmojiId).cloneNode(true));
+    for(let j = 0; j < currentEmojiId.length; j ++){
+        if(textMessage.indexOf(":" + currentEmojiId[j] + ":") !== -1){
+            backgroundMessage.innerHTML = backgroundMessage.innerHTML.replace(":" + currentEmojiId[j] + ":", "");
+            backgroundMessage.appendChild(document.getElementById(currentEmojiId[j]).cloneNode(true));
+        }
     }
 
     if(loadFile(imgMessage, backgroundMessage) === 1 || (backgroundMessage.innerHTML.length > 0 && backgroundMessage.innerHTML !== '<br>')){   
@@ -118,6 +120,7 @@ document.getElementById('button-send').onclick = function(){
         localStorage.setItem("List", serialList);
         document.getElementById('message').innerHTML = "";
 
+        //currentEmojiId = null;
         document.getElementById('text-field').scrollTop = document.getElementById('text-field').scrollHeight;
     }
 }

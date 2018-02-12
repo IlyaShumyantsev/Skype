@@ -1,5 +1,5 @@
 let modalWindowIsOpen = false;
-let currentEmojiId;
+let currentEmojiId = [];
 
 function loadSprite(path, emojiField){
     for(let j = 0, verticalStep = 0, id = 0; j < 3; j++){
@@ -56,7 +56,7 @@ document.getElementById('button-emoji').onclick = function(){
             }
             document.querySelector('#emoji-field').addEventListener('click', function(e){
                 let i = e.target.id;
-                currentEmojiId = i;
+                currentEmojiId.push(i);
                 document.getElementById('message').innerHTML += ':' + i + ":";
             });
         }

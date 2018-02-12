@@ -43,6 +43,7 @@ document.querySelector('#friend-list').addEventListener('click', function(e){
     createChatWith(i);
     loadSaveData(i);
     deleteMiniPhoto();
+    document.getElementById('text-field').scrollTop = document.getElementById('text-field').scrollHeight;
 });
 
 function loadSaveData(i){
@@ -116,5 +117,7 @@ document.getElementById('button-send').onclick = function(){
         let serialList = JSON.stringify(List);
         localStorage.setItem("List", serialList);
         document.getElementById('message').innerHTML = "";
+
+        document.getElementById('text-field').scrollTop = document.getElementById('text-field').scrollHeight;
     }
 }

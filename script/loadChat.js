@@ -98,11 +98,12 @@ document.getElementById('button-send').onclick = function(){
     let backgroundMessage = document.createElement('div');
     let textMessage = document.getElementById('message').innerHTML;
 
+    
     backgroundMessage.style.cssText = 'background: #fffff347; border-radius: 20px; margin-top:1%; margin-bottom:1%; height: 100%; width: 100%; float: right; bottom: 0%; display: inline-block;';
     backgroundMessage.innerHTML = textMessage;
 
     if(textMessage.indexOf(":" + currentEmojiId + ":") !== -1){
-      
+        backgroundMessage.innerHTML = backgroundMessage.innerHTML.replace(":" + currentEmojiId + ":", "");
         backgroundMessage.appendChild(document.getElementById(currentEmojiId).cloneNode(true));
     }
 

@@ -1,5 +1,4 @@
 let loadFriendListPerm = true;
-let folderName = '../prj';
 
 function loadListInBrowser(List){
     let friedListField = document.getElementById('friend-list');
@@ -29,14 +28,14 @@ function loadListInBrowser(List){
     friedListField.appendChild(fragmentFriendList);
 }
 
-if(JSON.parse(localStorage.getItem("List")) !== null && JSON.parse(localStorage.getItem("List")) !== undefined){
+if(JSON.parse(localStorage.getItem("Storage")) !== null && JSON.parse(localStorage.getItem("Storage")) !== undefined){
     loadFriendListPerm = false;
-    let List = JSON.parse(localStorage.getItem("List"));
+    let List = JSON.parse(localStorage.getItem("Storage"));
     loadListInBrowser(List);
 }
 
 if(loadFriendListPerm === true){
-    var serialFriendList = JSON.stringify(List);
-    localStorage.setItem("List", serialFriendList);
+    let serialFriendList = JSON.stringify(List);
+    localStorage.setItem("Storage", serialFriendList);
     loadListInBrowser(List);
 }

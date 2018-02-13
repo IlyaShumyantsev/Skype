@@ -2,7 +2,7 @@ var List = {
     friends: [
         {
             name: "Anton",
-            photo: "../prj/friendPhoto/1.jpg",
+            photo: "./friendPhoto/1.jpg",
             chat: ""
         },
         {
@@ -12,22 +12,22 @@ var List = {
         },
         {
             name: "Jason",
-            photo: "../prj/friendPhoto/3.jpg",
+            photo: "./friendPhoto/3.jpg",
             chat: ""
         },
         {
             name: "Mark",
-            photo: "../prj/friendPhoto/4.jpg",
+            photo: "./friendPhoto/4.jpg",
             chat: ""
         },
         {
             name: "Geralt",
-            photo: "../prj/friendPhoto/5.jpg",
+            photo: "./friendPhoto/5.jpg",
             chat: ""
         },
         {
             name: "Steve",
-            photo: "../prj/friendPhoto/6.jpg",
+            photo: "./friendPhoto/6.jpg",
             chat: ""
         },
         {

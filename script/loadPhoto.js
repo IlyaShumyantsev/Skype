@@ -1,24 +1,32 @@
 let currentFile;
 
 window.onload = function(){
-    List = JSON.parse(localStorage.getItem("List"));
-    loadPhoto('user-icon', List.user[0].photo);
+    if(loadFriendListPerm === false){
+        try{
+            List = JSON.parse(localStorage.getItem("Storage"));
+            let profileImage = this.document.getElementById('user-icon');
+            profileImage.src = List.user[0].photo;
+        }
+        catch(e){
+            this.console.log(e);
+        }
+    }
 };
 
-function loadPhoto(id, file){
-    document.getElementById(id).src = folderName + '/friendPhoto/' + file;
-}
-
-document.getElementById('button-load-profile-photo').onclick = function(){
-    if(document.getElementById('button-load-profile-photo').files[0].name !== undefined){
-        currentFile = document.getElementById('button-load-profile-photo').files[0].name;
+function loadProfilePhoto(){
+    let file = document.querySelector('input[type=file]#button-load-profile-photo').files[0];
+    let reader = new FileReader();
+    reader.onloadend = function () {
+        document.getElementById('user-icon').src = reader.result;
+        List = JSON.parse(localStorage.getItem("Storage"));
+        List.user[0].photo =  document.getElementById('user-icon').src;
+        let serialList = JSON.stringify(List);
+        localStorage.setItem("Storage", serialList);
     }
-}
-
-document.getElementById('apply-photo').onclick = function(){
-    currentFile = document.getElementById('button-load-profile-photo').files[0].name;
-    List.user[0].photo = currentFile;
-    let serialList = JSON.stringify(List);
-    localStorage.setItem("List", serialList);
-    loadPhoto('user-icon', currentFile);
+    if(file){
+        reader.readAsDataURL(file);
+    }
+    else{
+        document.getElementById('user-icon').src = "";
+    }
 }

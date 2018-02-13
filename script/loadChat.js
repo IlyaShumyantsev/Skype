@@ -1,9 +1,5 @@
 let currentId; 
 
-window.onload = function(){
-    List = JSON.parse(localStorage.getItem("List"));
-};
-
 function deleteMiniPhoto(){
     try{
         document.getElementById('mini-photo').parentNode.removeChild(document.getElementById('mini-photo'));
@@ -19,19 +15,6 @@ function clearNode(parentNode, tag){
         while(parentNode.firstChild){
             parentNode.removeChild(parentNode.firstChild);
         }
-    }
-}
-
-function loadFile(img, back){
-    try{
-        let messageFile = document.getElementById('button-load-photo').files[0].name;
-        img.style.cssText = 'height: 100px; width: 200px; float: right; bottom: 0%;';
-        img.src = folderName + '/friendPhoto/' + messageFile;
-        back.appendChild(img);
-        return 1;
-    } 
-    catch(e){
-        console.log(e);
     }
 }
 
@@ -63,10 +46,10 @@ function createChatWith(i){
 
     clearNode(chatField, 'div');
 
-    let List = JSON.parse(localStorage.getItem("List"));
-
     profileImage.className = 'profile-image';
     profileImage.style.cssText = 'width: 11%; height: 90%';
+
+    List = JSON.parse(localStorage.getItem("Storage"));
     profileImage.src = List.friends[i].photo;
 
     userName.className = 'user-name';
@@ -81,16 +64,42 @@ function createChatWith(i){
     chatField.appendChild(newChatField);
 }
 
-document.getElementById('button-load-photo').onchange = function(){
-    let messageFile = document.getElementById('button-load-photo').files[0].name;
-    let miniPhoto = document.createElement('img');
-    miniPhoto.id = 'mini-photo';
-    miniPhoto.className = 'mini-photo';
-    miniPhoto.src = folderName + '/friendPhoto/' + messageFile;
-    document.getElementById('body').appendChild(miniPhoto);
+function loadMiniPhoto(){
+    let file = document.querySelector('input[type=file]#button-load-photo').files[0];
+    let preview = document.createElement('img');
+    preview.id = 'mini-photo';
+    preview.className = 'mini-photo';
+    let reader = new FileReader();
+    reader.onloadend = function () {
+        preview.src = reader.result;
+    }
+    if(file){
+        reader.readAsDataURL(file);
+        document.getElementById('body').appendChild(preview);
 
-    document.getElementById('mini-photo').onclick = function(){
-        deleteMiniPhoto();
+        document.getElementById('mini-photo').onclick = function(){
+            deleteMiniPhoto();
+        }
+    }
+    else{
+        preview.src = "";
+    }
+}
+
+function loadFile(img, back){
+    try{
+        let file = document.querySelector('input[type=file]#button-load-photo').files[0];
+        img.style.cssText = 'height: 100px; width: 200px; float: right; bottom: 0%;';
+        let reader  = new FileReader();
+        reader.onloadend = function () {
+            img.src = reader.result;
+            back.appendChild(img);
+        }
+        reader.readAsDataURL(file);
+        return 1;
+    } 
+    catch(e){
+        console.log(e);
     }
 }
 
@@ -108,13 +117,14 @@ document.getElementById('button-send').onclick = function(){
         document.getElementById('text-field' + currentId).appendChild(backgroundMessage);
         deleteMiniPhoto(); 
 
-        List = JSON.parse(localStorage.getItem("List"));
+        List = JSON.parse(localStorage.getItem("Storage"));
         List.friends[currentId].chat =  document.getElementById('text-field' + currentId).innerHTML;
         let serialList = JSON.stringify(List);
-        localStorage.setItem("List", serialList);
+        localStorage.setItem("Storage", serialList);
         document.getElementById('message').innerHTML = "";
 
         currentEmojiId.length = 0;
+        document.querySelector('input[type=file]').files[0] = null;
         document.getElementById('text-field').scrollTop = document.getElementById('text-field').scrollHeight;
     }
 }

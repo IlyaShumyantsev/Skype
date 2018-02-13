@@ -7,7 +7,7 @@ var List = {
         },
         {
             name: "Mike",
-            photo: "../prj/friendPhoto/2.jpg",
+            photo: "./friendPhoto/2.jpg",
             chat: ""
         },
         {
@@ -32,7 +32,7 @@ var List = {
         },
         {
             name: "Sonia",
-            photo: "../prj/friendPhoto/7.jpg",
+            photo: "./friendPhoto/7.jpg",
             chat: ""
         }
     ],

@@ -2,6 +2,7 @@ let loadFriendListPerm = true;
 
 function loadListInBrowser(List){
     let friedListField = document.getElementById('friend-list');
+    let fragmentFriendList = document.createDocumentFragment();
     for(let i = 0; i < List.friends.length; i++){
         let currentFriend = document.createElement('div');
         let currentFriendName = document.createElement('div');
@@ -22,8 +23,9 @@ function loadListInBrowser(List){
 
         currentFriend.appendChild(currentFriendPhoto);
         currentFriend.appendChild(currentFriendName);
-        friedListField.appendChild(currentFriend);
+        fragmentFriendList.appendChild(currentFriend);
     }
+    friedListField.appendChild(fragmentFriendList);
 }
 
 if(JSON.parse(localStorage.getItem("List")) !== null && JSON.parse(localStorage.getItem("List")) !== undefined){

@@ -18,7 +18,7 @@ document.getElementById('button-load-profile-photo').onclick = function(){
 document.getElementById('apply-photo').onclick = function(){
     currentFile = document.getElementById('button-load-profile-photo').files[0].name;
     List.user[0].photo = currentFile;
-    var serialList = JSON.stringify(List);
+    let serialList = JSON.stringify(List);
     localStorage.setItem("List", serialList);
     loadPhoto('user-icon', currentFile);
 }

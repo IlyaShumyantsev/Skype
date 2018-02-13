@@ -25,7 +25,6 @@ function clearNode(parentNode, tag){
 function loadFile(img, back){
     try{
         let messageFile = document.getElementById('button-load-photo').files[0].name;
-        //let imgElement = document.createElement('img');
         img.style.cssText = 'height: 100px; width: 200px; float: right; bottom: 0%;';
         img.src = '../prj/friendPhoto/' + messageFile;
         back.appendChild(img);
@@ -56,24 +55,25 @@ function loadSaveData(i){
 function createChatWith(i){
     let chatField = document.getElementById('text-field');
     let newChatField = document.createElement('div');
+    let chatFriendInfo = document.createElement('div');
+    let profileImage = document.createElement('img');
+    let userName = document.createElement('div');
+
     newChatField.id = 'info-field' + i;
 
     clearNode(chatField, 'div');
 
     let List = JSON.parse(localStorage.getItem("List"));
 
-    let chatFriendInfo = document.createElement('div');
-    let profileImage = document.createElement('img');
-    let userName = document.createElement('div');
-
     profileImage.className = 'profile-image';
     profileImage.style.cssText = 'width: 11%; height: 90%';
     profileImage.src = List.friends[i].photo;
+
     userName.className = 'user-name';
     userName.innerHTML = List.friends[i].name;
-    chatFriendInfo.className = 'message-field';
+
+    chatFriendInfo.className = 'chat-friend-info';
     chatFriendInfo.id = 'chat-friend-info' + i;
-    chatFriendInfo.style.cssText = 'top: 10%; width: 70%; height: 18%; margin-left: 0%; background: #a3f064d0;';
 
     chatFriendInfo.appendChild(profileImage);
     chatFriendInfo.appendChild(userName);
@@ -85,7 +85,7 @@ document.getElementById('button-load-photo').onchange = function(){
     let messageFile = document.getElementById('button-load-photo').files[0].name;
     let miniPhoto = document.createElement('img');
     miniPhoto.id = 'mini-photo';
-    miniPhoto.style.cssText = 'position: absolute; background: url(../prj/friendPhoto/' + messageFile + ') 100% 100% no-repeat; border-radius: 20px; margin-bottom:8%; margin-left: 31%; height: 20%; width: 15%; float: left; bottom: 2%; display: inline-block; cursor:pointer;';
+    miniPhoto.className = 'mini-photo';
     miniPhoto.src = '../prj/friendPhoto/' + messageFile;
     document.getElementById('body').appendChild(miniPhoto);
 
@@ -100,15 +100,10 @@ document.getElementById('button-send').onclick = function(){
     let textMessage = document.getElementById('message').innerHTML;
 
     
-    backgroundMessage.style.cssText = 'background: #fffff347; border-radius: 20px; margin-top:1%; margin-bottom:1%; height: 100%; width: 100%; float: right; bottom: 0%; display: inline-block;';
+    backgroundMessage.className = 'background-message';
     backgroundMessage.innerHTML = textMessage;
 
-    for(let j = 0; j < currentEmojiId.length; j ++){
-        if(textMessage.indexOf(":" + currentEmojiId[j] + ":") !== -1){
-            backgroundMessage.innerHTML = backgroundMessage.innerHTML.replace(":" + currentEmojiId[j] + ":", "");
-            backgroundMessage.appendChild(document.getElementById(currentEmojiId[j]).cloneNode(true));
-        }
-    }
+    insertEmoji(backgroundMessage, textMessage);
 
     if(loadFile(imgMessage, backgroundMessage) === 1 || (backgroundMessage.innerHTML.length > 0 && backgroundMessage.innerHTML !== '<br>')){   
         document.getElementById('text-field' + currentId).appendChild(backgroundMessage);
@@ -120,7 +115,7 @@ document.getElementById('button-send').onclick = function(){
         localStorage.setItem("List", serialList);
         document.getElementById('message').innerHTML = "";
 
-        //currentEmojiId = null;
+        currentEmojiId.length = 0;
         document.getElementById('text-field').scrollTop = document.getElementById('text-field').scrollHeight;
     }
 }

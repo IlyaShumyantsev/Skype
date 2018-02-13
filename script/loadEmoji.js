@@ -33,14 +33,14 @@ function modalWindow(){
     
     line.className = 'line';
     
-    buttonClose.src = '../prj/img/close.png';
+    buttonClose.src = folderName + '/img/close.png';
     buttonClose.id = 'close-button';
     buttonClose.className = 'button-close';
 
     emojiField.className = 'emoji-field';
     emojiField.id = 'emoji-field';
     
-    loadSprite('../prj/img/emoji-sprite.png' ,emojiField)
+    loadSprite(folderName + '/img/emoji-sprite.png' ,emojiField)
     line.appendChild(buttonClose);
     modalWindow.appendChild(line);
     modalWindow.appendChild(emojiField);

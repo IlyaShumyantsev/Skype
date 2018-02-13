@@ -1,4 +1,5 @@
 let loadFriendListPerm = true;
+let folderName = '../prj';
 
 function loadListInBrowser(List){
     let friedListField = document.getElementById('friend-list');

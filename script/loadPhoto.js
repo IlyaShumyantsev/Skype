@@ -3,10 +3,10 @@ let currentFile;
 window.onload = function(){
     List = JSON.parse(localStorage.getItem("List"));
     loadPhoto('user-icon', List.user[0].photo);
-}
+};
 
 function loadPhoto(id, file){
-    document.getElementById(id).src = '../prj/friendPhoto/' + file;
+    document.getElementById(id).src = folderName + '/friendPhoto/' + file;
 }
 
 document.getElementById('button-load-profile-photo').onclick = function(){

@@ -26,7 +26,7 @@ function loadFile(img, back){
     try{
         let messageFile = document.getElementById('button-load-photo').files[0].name;
         img.style.cssText = 'height: 100px; width: 200px; float: right; bottom: 0%;';
-        img.src = '../prj/friendPhoto/' + messageFile;
+        img.src = folderName + '/friendPhoto/' + messageFile;
         back.appendChild(img);
         return 1;
     } 
@@ -86,7 +86,7 @@ document.getElementById('button-load-photo').onchange = function(){
     let miniPhoto = document.createElement('img');
     miniPhoto.id = 'mini-photo';
     miniPhoto.className = 'mini-photo';
-    miniPhoto.src = '../prj/friendPhoto/' + messageFile;
+    miniPhoto.src = folderName + '/friendPhoto/' + messageFile;
     document.getElementById('body').appendChild(miniPhoto);
 
     document.getElementById('mini-photo').onclick = function(){
@@ -98,7 +98,6 @@ document.getElementById('button-send').onclick = function(){
     let imgMessage = document.createElement('img');
     let backgroundMessage = document.createElement('div');
     let textMessage = document.getElementById('message').innerHTML;
-
     
     backgroundMessage.className = 'background-message';
     backgroundMessage.innerHTML = textMessage;

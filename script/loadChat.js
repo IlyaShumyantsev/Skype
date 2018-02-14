@@ -86,24 +86,7 @@ function loadMiniPhoto(){
     }
 }
 
-function loadFile(img, back){
-    try{
-        let file = document.querySelector('input[type=file]#button-load-photo').files[0];
-        img.style.cssText = 'height: 100px; width: 200px; float: right; bottom: 0%;';
-        let reader  = new FileReader();
-        reader.onloadend = function () {
-            img.src = reader.result;
-            back.appendChild(img);
-        }
-        reader.readAsDataURL(file);
-        return 1;
-    } 
-    catch(e){
-        console.log(e);
-    }
-}
-
-document.getElementById('button-send').onclick = function(){
+function sendMessage(){
     let imgMessage = document.createElement('img');
     let backgroundMessage = document.createElement('div');
     let textMessage = document.getElementById('message').innerHTML;
@@ -113,18 +96,34 @@ document.getElementById('button-send').onclick = function(){
 
     insertEmoji(backgroundMessage, textMessage);
 
-    if(loadFile(imgMessage, backgroundMessage) === 1 || (backgroundMessage.innerHTML.length > 0 && backgroundMessage.innerHTML !== '<br>')){   
-        document.getElementById('text-field' + currentId).appendChild(backgroundMessage);
-        deleteMiniPhoto(); 
+    let file = document.querySelector('input[type=file]#button-load-photo').files[0];
 
-        List = JSON.parse(localStorage.getItem("Storage"));
-        List.friends[currentId].chat = document.getElementById('text-field' + currentId).innerHTML;
-        let serialList = JSON.stringify(List);
-        localStorage.setItem("Storage", serialList);
-
-        document.getElementById('message').innerHTML = "";
-        currentEmojiId.length = 0;
-
-        document.getElementById('text-field').scrollTop = document.getElementById('text-field').scrollHeight;
+    if(file && (backgroundMessage.innerHTML.length > 0 && backgroundMessage.innerHTML !== '<br>') || file){
+        imgMessage.style.cssText = 'height: 100px; width: 200px; float: right; bottom: 0%;';
+        let reader  = new FileReader();
+        reader.onloadend = function () {
+            imgMessage.src = reader.result;
+            backgroundMessage.appendChild(imgMessage);
+            document.getElementById('text-field' + currentId).appendChild(backgroundMessage); 
+            List = JSON.parse(localStorage.getItem("Storage"));
+            List.friends[currentId].chat = document.getElementById('text-field' + currentId).innerHTML;
+            let serialList = JSON.stringify(List);
+            localStorage.setItem("Storage", serialList);
+            document.getElementById('message').innerHTML = "";
+            currentEmojiId.length = 0;
+            deleteMiniPhoto();
+            document.getElementById('text-field').scrollTop = document.getElementById('text-field').scrollHeight;
+        }
+        reader.readAsDataURL(file);
+    }
+    else if(backgroundMessage.innerHTML.length > 0 && backgroundMessage.innerHTML !== '<br>'){
+        document.getElementById('text-field' + currentId).appendChild(backgroundMessage); 
+            List = JSON.parse(localStorage.getItem("Storage"));
+            List.friends[currentId].chat = document.getElementById('text-field' + currentId).innerHTML;
+            let serialList = JSON.stringify(List);
+            localStorage.setItem("Storage", serialList);
+            document.getElementById('message').innerHTML = "";
+            currentEmojiId.length = 0;
+            document.getElementById('text-field').scrollTop = document.getElementById('text-field').scrollHeight;
     }
 }

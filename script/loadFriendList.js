@@ -20,6 +20,8 @@ function loadListInBrowser(List){
         currentFriendPhoto.className = 'profile-image';
         currentFriendPhoto.style.cssText = 'height: 80%; width: 20%;';
         currentFriendPhoto.src = List.friends[i].photo;
+        currentFriendPhoto.id = 'current-friend' + i;
+        currentFriendName.id = 'current-friend' + i;
 
         currentFriend.appendChild(currentFriendPhoto);
         currentFriend.appendChild(currentFriendName);

@@ -36,6 +36,10 @@ function modalWindow(){
     buttonClose.src = './img/close.png';
     buttonClose.id = 'close-button';
     buttonClose.className = 'button-close';
+    buttonClose.onclick = function(){
+        deleteModalWindow();
+        modalWindowIsOpen = false;
+    };
 
     emojiField.className = 'emoji-field';
     emojiField.id = 'emoji-field';
@@ -64,15 +68,11 @@ function insertEmoji(backgroundMessage, textMessage){
     }
 }
 
-document.getElementById('button-emoji').onclick = function(){
+function showEmojiList(){
     if(modalWindowIsOpen === false){
         modalWindow();
         modalWindowIsOpen = true;
         if(modalWindowIsOpen === true){
-            document.getElementById('close-button').onclick = function(){
-                deleteModalWindow();
-                modalWindowIsOpen = false;
-            }
             document.querySelector('#emoji-field').addEventListener('click', function(e){
                 let i = e.target.id;
                 currentEmojiId.push(i);

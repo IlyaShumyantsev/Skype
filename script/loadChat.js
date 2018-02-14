@@ -69,6 +69,9 @@ function loadMiniPhoto(){
     let preview = document.createElement('img');
     preview.id = 'mini-photo';
     preview.className = 'mini-photo';
+    preview.onclick = function(){
+        deleteMiniPhoto();
+    }
     let reader = new FileReader();
     reader.onloadend = function () {
         preview.src = reader.result;
@@ -76,10 +79,6 @@ function loadMiniPhoto(){
     }
     if(file){
         reader.readAsDataURL(file);
-
-        document.getElementById('mini-photo').onclick = function(){
-            deleteMiniPhoto();
-        }
     }
     else{
         preview.src = "";
@@ -118,12 +117,12 @@ function sendMessage(){
     }
     else if(backgroundMessage.innerHTML.length > 0 && backgroundMessage.innerHTML !== '<br>'){
         document.getElementById('text-field' + currentId).appendChild(backgroundMessage); 
-            List = JSON.parse(localStorage.getItem("Storage"));
-            List.friends[currentId].chat = document.getElementById('text-field' + currentId).innerHTML;
-            let serialList = JSON.stringify(List);
-            localStorage.setItem("Storage", serialList);
-            document.getElementById('message').innerHTML = "";
-            currentEmojiId.length = 0;
-            document.getElementById('text-field').scrollTop = document.getElementById('text-field').scrollHeight;
+        List = JSON.parse(localStorage.getItem("Storage"));
+        List.friends[currentId].chat = document.getElementById('text-field' + currentId).innerHTML;
+        let serialList = JSON.stringify(List);
+        localStorage.setItem("Storage", serialList);
+        document.getElementById('message').innerHTML = "";
+        currentEmojiId.length = 0;
+        document.getElementById('text-field').scrollTop = document.getElementById('text-field').scrollHeight;
     }
 }

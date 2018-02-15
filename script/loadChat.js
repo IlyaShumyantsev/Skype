@@ -108,6 +108,7 @@ function sendMessage(){
         reader.readAsDataURL(file);
     }
     else if(backgroundMessage.html().length > 0 && backgroundMessage.html() !== '<br>'){
+        //backgroundMessage.html(backgroundMessage.html().toString().replace('<br>', '&nbsp;'));
         $('div.text-field').append(backgroundMessage); 
         List = JSON.parse(localStorage.getItem("Storage"));
         List.friends[currentId].chat = $('div.text-field').html();

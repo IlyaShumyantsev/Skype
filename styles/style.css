@@ -268,7 +268,7 @@ header{
     border-radius: 20px;
     margin-top:1%;
     margin-bottom:1%;
-    height: 100%;
+    height: auto;
     width: 100%;
     float: right;
     bottom: 0%;
@@ -346,4 +346,34 @@ header{
     height: 15%;
     width: 5%;
     cursor: pointer;
+}
+
+.friend{
+    position: relative;
+    background: #bcd4ff;
+    cursor: pointer;
+}
+
+.friendPhoto{
+    height: 80%;
+    width: 20%;
+}
+
+.info-photo{
+    width: 11%;
+    height: 90%
+}
+
+.img-message{
+    height: 100px;
+    width: 200px;
+    float: right;
+    bottom: 0%;
+}
+
+.cut-sprite{
+    cursor: pointer;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
 }

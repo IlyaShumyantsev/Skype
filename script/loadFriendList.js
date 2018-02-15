@@ -1,7 +1,6 @@
 let loadFriendListPerm = true;
 
 function loadListInBrowser(List){
-    let friedListField = document.getElementById('friend-list');
     let fragmentFriendList = document.createDocumentFragment();
     for(let i = 0; i < List.friends.length; i++){
         let currentFriend = document.createElement('div');
@@ -10,24 +9,17 @@ function loadListInBrowser(List){
 
         currentFriendName.innerHTML = List.friends[i].name;
 
-        currentFriend.className = 'user-info';
-        currentFriend.style.position = 'relative';
-        currentFriend.style.background = '#bcd4ff';
-        currentFriend.style.cursor = 'pointer';
-        currentFriend.id = 'current-friend' + i;
+        currentFriend.className = 'user-info ' + 'friend';
+        currentFriendName.className = 'user-name ' + 'friendName';
+        currentFriendPhoto.className = 'profile-image ' + 'friendPhoto';
 
-        currentFriendName.className = 'user-name';
-        currentFriendPhoto.className = 'profile-image';
-        currentFriendPhoto.style.cssText = 'height: 80%; width: 20%;';
         currentFriendPhoto.src = List.friends[i].photo;
-        currentFriendPhoto.id = 'current-friend' + i;
-        currentFriendName.id = 'current-friend' + i;
 
         currentFriend.appendChild(currentFriendPhoto);
         currentFriend.appendChild(currentFriendName);
         fragmentFriendList.appendChild(currentFriend);
     }
-    friedListField.appendChild(fragmentFriendList);
+    $('.friend-list').append(fragmentFriendList);
 }
 
 if(JSON.parse(localStorage.getItem("Storage")) !== null && JSON.parse(localStorage.getItem("Storage")) !== undefined){

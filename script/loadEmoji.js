@@ -6,14 +6,9 @@ function loadSprite(path, emojiField){
     for(let j = 0, verticalStep = 0, id = 0; j < 3; j++){
         for(let i = 0, horizontalStep = 0; i < 9; i++){
             let cutSprite = document.createElement('div');
-
-            cutSprite.style.cssText = 'cursor: pointer; display: inline-block; background:  url(' + 
-            path + ') 100% 100% no-repeat; height:' 
-            + 40 + 'px; width:' + 40 + 'px; background-position: left ' + horizontalStep 
+            cutSprite.className = 'cut-sprite';
+            cutSprite.style.cssText = 'background:  url(' + path + ') 100% 100% no-repeat; background-position: left ' + horizontalStep 
             + 'px top ' + verticalStep +'px;';
-
-            cutSprite.id = 'emoji' + id;
-            id++;
             horizontalStep -= 37.7;
             fragment.appendChild(cutSprite);
         }
@@ -29,43 +24,45 @@ function modalWindow(){
     let emojiField = document.createElement('div');
 
     modalWindow.className = 'modal-window';
-    modalWindow.id = 'emoji-window';
-    
     line.className = 'line';
+    buttonClose.className = 'button-close';
     
     buttonClose.src = './img/close.png';
-    buttonClose.id = 'close-button';
-    buttonClose.className = 'button-close';
     buttonClose.onclick = function(){
         deleteModalWindow();
         modalWindowIsOpen = false;
     };
 
     emojiField.className = 'emoji-field';
-    emojiField.id = 'emoji-field';
     
     loadSprite('./img/emoji-sprite.png' ,emojiField)
     line.appendChild(buttonClose);
     modalWindow.appendChild(line);
     modalWindow.appendChild(emojiField);
-    document.getElementById('body').appendChild(modalWindow);
+    $('.body').append(modalWindow);
 }
 
 function deleteModalWindow(){
     try{
-        document.getElementById('emoji-window').parentNode.removeChild(document.getElementById('emoji-window'));
+        $('div.modal-window').remove();
     } catch(e){
         console.log(e);
     }
 }
 
 function insertEmoji(backgroundMessage, textMessage){
-    for(let j = 0; j < currentEmojiId.length; j ++){
-        if(textMessage.indexOf(":" + currentEmojiId[j] + ":") !== -1){
-            backgroundMessage.innerHTML = backgroundMessage.innerHTML.replace(":" + currentEmojiId[j] + ":", "");
-            backgroundMessage.appendChild(document.getElementById(currentEmojiId[j]).cloneNode(true));
+    let fragment = document.createDocumentFragment('div');
+    let textFragment = document.createDocumentFragment('div');
+    textFragment.innerHTML = textMessage;
+    for(let j = 0; j < currentEmojiId.length; j++){
+        if(textMessage.indexOf(":emoji" + currentEmojiId[j] + ":") !== -1){
+            backgroundMessage.append($('div.emoji-field').children('div.cut-sprite:eq(' + currentEmojiId[j] + ')').clone(true));
+            fragment.innerHTML = backgroundMessage.html();
+            textFragment.innerHTML = textFragment.innerHTML.toString().replace(":emoji" + currentEmojiId[j] + ":", fragment.innerHTML);
+            backgroundMessage.html(textFragment);
         }
     }
+    backgroundMessage.html(textFragment.innerHTML);
 }
 
 function showEmojiList(){
@@ -73,10 +70,11 @@ function showEmojiList(){
         modalWindow();
         modalWindowIsOpen = true;
         if(modalWindowIsOpen === true){
-            document.querySelector('#emoji-field').addEventListener('click', function(e){
-                let i = e.target.id;
+            $('div.emoji-field').bind('click', function(event){
+                let i = $(event.target).index();
                 currentEmojiId.push(i);
-                document.getElementById('message').innerHTML += ':' + i + ":";
+                let oldHtml = $('div.text-area').html();
+                $('div.text-area').html(oldHtml + ':emoji' + i + ":"); 
             });
         }
     }

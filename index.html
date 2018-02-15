@@ -10,28 +10,29 @@
     </style>
     <link rel="icon" href="img/favicon.ico" type="image/md.microsoft.icon"/>
 </head>
-<body id="body">
+<body class="body">
     <header>
         <a class="logo"></a>
     </header>
     <div class="menu">
         <div class="user-info">
-            <img class="profile-image" id="user-icon"/>
+            <img class="profile-image user"/>
             <div class="user-name">User</div>
-            <input value="" class="hide-input-profile-photo" type="file" id="button-load-profile-photo" onchange="loadProfilePhoto();"/>   
+            <input value="" class="hide-input-profile-photo" type="file" onchange="loadProfilePhoto(event);"/>   
         </div>
-        <div class="friend-list" id="friend-list"></div>
+        <div class="friend-list" onclick="selectFriend(event);"></div>
     </div>
-    <div class="chat-field" id="chat-field"></div>
-    <div class="text-field" id="text-field">
+    <div class="chat-field"></div>
+    <div class="text-field">
     </div>
     <div class="message-field">
-        <div class="text-area" contentEditable="true" id="message"></div>
-        <div class="button-send" id="button-send" onclick="sendMessage();"></div>
-        <div class="button-emogi" id="button-emoji" onclick="showEmojiList();"></div>
+        <div class="text-area" contentEditable="true"></div>
+        <div class="button-send" onclick="sendMessage();"></div>
+        <div class="button-emogi" onclick="showEmojiList();"></div>
         <label for="button-load-photo" class="button-load-photo"></label>
-        <input type="file" class="hide-input-load-file" id="button-load-photo" onchange="loadMiniPhoto();"/>
+        <input type="file" class="hide-input-load-file" onchange="loadMiniPhoto();"/>
     </div>
+    <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jQuery/jquery-1.11.0.min.js"></script>
     <script src="script/localStorage.js"></script>
     <script src="script/loadFriendList.js"></script>
     <script src="script/loadChat.js"></script>

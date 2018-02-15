@@ -2,80 +2,72 @@ let currentId;
 
 function deleteMiniPhoto(){
     try{
-        document.getElementById('mini-photo').parentNode.removeChild(document.getElementById('mini-photo'));
-        document.getElementById('button-load-photo').value = null;
+        $('img.mini-photo').remove();
+        $('input.hide-input-load-file').val(null);
     } 
     catch(e){
         console.log(e);
     }
 }
 
-function clearNode(parentNode, tag){
-    if(parentNode.querySelector(tag)){
-        while(parentNode.firstChild){
-            parentNode.removeChild(parentNode.firstChild);
-        }
-    }
+function clearNode(parentNode){
+    parentNode.html('');
 }
 
-document.querySelector('#friend-list').addEventListener('click', function(e){
-    let i = e.target.id.substring(e.target.id.length - 1, e.target.id.length);
+function selectFriend(event){
+    let i = $(event.target).index();
     currentId = i;
     createChatWith(i);
     loadSaveData(i);
     deleteMiniPhoto();
-    document.getElementById('text-field').scrollTop = document.getElementById('text-field').scrollHeight;
-});
+    $('div.text-field').scrollTop($('div.text-field').height());
+}
 
 function loadSaveData(i){
     List = JSON.parse(localStorage.getItem("Storage"));
     let currentFriendChat = document.createElement('div');
-    currentFriendChat.id = 'text-field' + i;
     currentFriendChat.innerHTML = List.friends[i].chat;
-    document.getElementById('text-field').appendChild(currentFriendChat);
+    $('div.text-field').append(currentFriendChat);
+    $('div.text-field').scrollTop($('div.text-field').height());
 }
 
 function createChatWith(i){
-    let chatField = document.getElementById('text-field');
     let newChatField = document.createElement('div');
     let chatFriendInfo = document.createElement('div');
     let profileImage = document.createElement('img');
     let userName = document.createElement('div');
 
-    newChatField.id = 'info-field' + i;
+    clearNode($('div.text-field'));
 
-    clearNode(chatField, 'div');
-
-    profileImage.className = 'profile-image';
-    profileImage.style.cssText = 'width: 11%; height: 90%';
+    profileImage.className = 'profile-image info-photo';
+    userName.className = 'user-name';
+    chatFriendInfo.className = 'chat-friend-info';
 
     List = JSON.parse(localStorage.getItem("Storage"));
     profileImage.src = List.friends[i].photo;
 
-    userName.className = 'user-name';
     userName.innerHTML = List.friends[i].name;
-
-    chatFriendInfo.className = 'chat-friend-info';
-    chatFriendInfo.id = 'chat-friend-info' + i;
 
     chatFriendInfo.appendChild(profileImage);
     chatFriendInfo.appendChild(userName);
     newChatField.appendChild(chatFriendInfo);
-    chatField.appendChild(newChatField);
+    $('div.text-field').append(newChatField);
 }
 
 function loadMiniPhoto(){
-    let file = document.querySelector('input[type=file]#button-load-photo').files[0];
+    let file = document.querySelector('input[type=file].hide-input-load-file').files[0];
     let preview = document.createElement('img');
-    preview.id = 'mini-photo';
     preview.className = 'mini-photo';
+
     preview.onclick = function(){
         deleteMiniPhoto();
     }
+
     let reader = new FileReader();
+
     reader.onloadend = function () {
         preview.src = reader.result;
-        document.getElementById('body').appendChild(preview);
+        $('.body').append(preview);
     }
     if(file){
         reader.readAsDataURL(file);
@@ -87,42 +79,42 @@ function loadMiniPhoto(){
 
 function sendMessage(){
     let imgMessage = document.createElement('img');
-    let backgroundMessage = document.createElement('div');
-    let textMessage = document.getElementById('message').innerHTML;
+    //let backgroundMessage = document.createElement('div');
+    let backgroundMessage = $("<div></div>")
     
-    backgroundMessage.className = 'background-message';
-    backgroundMessage.innerHTML = textMessage;
+    backgroundMessage.addClass('background-message');
+    backgroundMessage.innerHTML = $('div.text-area').html();
 
-    insertEmoji(backgroundMessage, textMessage);
+    insertEmoji(backgroundMessage, $('div.text-area').html());
 
-    let file = document.querySelector('input[type=file]#button-load-photo').files[0];
+    let file = document.querySelector('input[type=file].hide-input-load-file').files[0];
 
-    if(file && (backgroundMessage.innerHTML.length > 0 && backgroundMessage.innerHTML !== '<br>') || file){
-        imgMessage.style.cssText = 'height: 100px; width: 200px; float: right; bottom: 0%;';
+    if(file && (backgroundMessage.html().length > 0 && backgroundMessage.html() !== '<br>') || file){
+        imgMessage.className = 'img-message';
         let reader  = new FileReader();
         reader.onloadend = function () {
             imgMessage.src = reader.result;
-            backgroundMessage.appendChild(imgMessage);
-            document.getElementById('text-field' + currentId).appendChild(backgroundMessage); 
+            backgroundMessage.append(imgMessage);
+            $('div.text-field').append(backgroundMessage);
             List = JSON.parse(localStorage.getItem("Storage"));
-            List.friends[currentId].chat = document.getElementById('text-field' + currentId).innerHTML;
+            List.friends[currentId].chat =  $('div.text-field').html();
             let serialList = JSON.stringify(List);
             localStorage.setItem("Storage", serialList);
-            document.getElementById('message').innerHTML = "";
+            $('div.text-area').html("");
             currentEmojiId.length = 0;
             deleteMiniPhoto();
-            document.getElementById('text-field').scrollTop = document.getElementById('text-field').scrollHeight;
+            $('div.text-field').scrollTop($('div.text-field').height());
         }
         reader.readAsDataURL(file);
     }
-    else if(backgroundMessage.innerHTML.length > 0 && backgroundMessage.innerHTML !== '<br>'){
-        document.getElementById('text-field' + currentId).appendChild(backgroundMessage); 
+    else if(backgroundMessage.html().length > 0 && backgroundMessage.html() !== '<br>'){
+        $('div.text-field').append(backgroundMessage); 
         List = JSON.parse(localStorage.getItem("Storage"));
-        List.friends[currentId].chat = document.getElementById('text-field' + currentId).innerHTML;
+        List.friends[currentId].chat = $('div.text-field').html();
         let serialList = JSON.stringify(List);
         localStorage.setItem("Storage", serialList);
-        document.getElementById('message').innerHTML = "";
+        $('div.text-area').html("");
         currentEmojiId.length = 0;
-        document.getElementById('text-field').scrollTop = document.getElementById('text-field').scrollHeight;
+        $('div.text-field').scrollTop($('div.text-field').height());
     }
 }

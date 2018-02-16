@@ -61,14 +61,15 @@ function loadMiniPhoto(){
 
     preview.onclick = function(){
         deleteMiniPhoto();
-    }
+    };
 
     let reader = new FileReader();
 
     reader.onloadend = function () {
         preview.src = reader.result;
         $('.body').append(preview);
-    }
+    };
+    
     if(file){
         reader.readAsDataURL(file);
     }
